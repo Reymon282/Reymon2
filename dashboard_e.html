@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Extendido - Proyecto Final</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #333; color: white; padding: 1em; text-align: center; }
+        nav { background: #444; padding: 1em; text-align: center; flex-wrap: wrap; }
+        nav a { color: white; margin: 10px; text-decoration: none; }
+        section { padding: 2em; display: none; }
+        section.active { display: block; }
+        .chart-container { width: 90%; max-width: 800px; margin: auto; padding-bottom: 2em; }
+        .image-container img { max-width: 100%; height: auto; margin: 20px 0; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Dashboard Extendido - Proyecto Final</h1>
+</header>
+<nav>
+    <a href="#" onclick="showSection('facebook')">Facebook</a>
+    <a href="#" onclick="showSection('instagram')">Instagram</a>
+    <a href="#" onclick="showSection('web')">Página Web</a>
+    <a href="#" onclick="showSection('ranking')">Ranking</a>
+    <a href="#" onclick="showSection('kpi')">KPIs</a>
+    <a href="#" onclick="showSection('fb_tipos')">FB por Tipo</a>
+    <a href="#" onclick="showSection('ig_costo')">IG Costo/Clic</a>
+    <a href="#" onclick="showSection('web_fuente')">Web Fuentes</a>
+    <a href="#" onclick="showSection('web_duracion')">Web Duración</a>
+    <a href="#" onclick="showSection('imagenes')">Galería</a>
+</nav>
+
+<section id="facebook" class="active">
+    <h2>Facebook</h2>
+    <div class="chart-container">
+        <canvas id="fbChart"></canvas>
+    </div>
+</section>
+
+<section id="instagram">
+    <h2>Instagram</h2>
+    <div class="chart-container">
+        <canvas id="igChart"></canvas>
+    </div>
+</section>
+
+<section id="web">
+    <h2>Web</h2>
+    <div class="chart-container">
+        <canvas id="webChart"></canvas>
+    </div>
+</section>
+
+<section id="ranking">
+    <h2>Top 3 Publicaciones Facebook (por clics)</h2>
+    <ol>
+        
+    <li>
+        <strong>¡Bienvenidas a fetch! ✨️
+
+Somos un negocio que se dedica a vender bolsas y mochi...</strong><br>
+        Clics: 236 | Reacciones: 73 | Alcance: 854
+        <br><a href="https://www.facebook.com/permalink.php?story_fbid=pfbid0ETz8whjgmG26ynaJip5dyuEn7vev3sxHpLXuvu4r2v1WYCjvHKemBhfyVrUFaFWdl&id=61565129917481" target="_blank">Ver publicación</a>
+    </li>
+    
+    <li>
+        <strong>✨ ¡El accesorio perfecto para cada ocasión!
+
+Consigue la tuya vía DM: 646 102 91...</strong><br>
+        Clics: 96 | Reacciones: 25 | Alcance: 342
+        <br><a href="https://www.facebook.com/permalink.php?story_fbid=pfbid02M1P4mnRgL92ZgUAtFcpAEiHrjibEUdVJTMce1nwmMxSFNhURAV6UNGYLf4YpNCsxl&id=61565129917481" target="_blank">Ver publicación</a>
+    </li>
+    
+    <li>
+        <strong>DISPONIBLE ✨️
+Mochila casual 
+
+$300 pesos c/u
+
+Colores:
+Azul marino 💙
+Negro 🖤
+
+¡...</strong><br>
+        Clics: 47 | Reacciones: 21 | Alcance: 281
+        <br><a href="https://www.facebook.com/permalink.php?story_fbid=pfbid0sXMHMeKDqzzUnP5KkTMKw5HfxD3HJvS251sXhDWYXNrRMaCnQ83R5JHkYJtZYahol&id=61565129917481" target="_blank">Ver publicación</a>
+    </li>
+    
+    </ol>
+</section>
+
+<section id="kpi">
+    <h2>KPIs (CPM)</h2>
+    <div class="chart-container">
+        <canvas id="kpiChart"></canvas>
+    </div>
+</section>
+
+
+<section id="fb_tipos">
+    <h2>Facebook: Clics por tipo de publicación</h2>
+    <div class="chart-container">
+        <canvas id="fbTypeChart"></canvas>
+    </div>
+</section>
+
+<section id="ig_costo">
+    <h2>Instagram: Costo por Clic (MXN)</h2>
+    <div class="chart-container">
+        <canvas id="igCPCChart"></canvas>
+    </div>
+</section>
+
+<section id="web_fuente">
+    <h2>Web: Visitas por Fuente de Tráfico</h2>
+    <div class="chart-container">
+        <canvas id="webSourceChart"></canvas>
+    </div>
+</section>
+
+<section id="web_duracion">
+    <h2>Web: Duración Promedio de Sesión (segundos)</h2>
+    <div class="chart-container">
+        <canvas id="webDurationChart"></canvas>
+    </div>
+</section>
+
+
+<section id="imagenes">
+    <h2>Galería</h2>
+    <div class="image-container">
+        <img src="adq.png" alt="Adquisición">
+        <img src="click.png" alt="Clics">
+        <img src="rebote.png" alt="Rebote">
+        <img src="sentim.png" alt="Sentimiento">
+    </div>
+</section>
+
+<script>
+function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+new Chart(document.getElementById('fbChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Impresiones', 'Alcance', 'Reacciones', 'Clics'],
+        datasets: [{
+            label: 'Facebook KPIs',
+            data: [1033, 854, 73, 236],
+            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+        }]
+    }
+});
+
+new Chart(document.getElementById('igChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Clics', 'Comentarios positivos', 'Inversión (MXN)'],
+        datasets: [{
+            label: 'Instagram KPIs',
+            data: [59, 3, 400],
+            backgroundColor: 'rgba(255, 99, 132, 0.6)'
+        }]
+    }
+});
+
+new Chart(document.getElementById('webChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Visitas página', 'Sesiones', 'WhatsApp clics'],
+        datasets: [{
+            label: 'Web KPIs',
+            data: [8, 6, 1],
+            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+        }]
+    }
+});
+
+new Chart(document.getElementById('kpiChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Costo Total (MXN)', 'Impresiones', 'CPM'],
+        datasets: [{
+            data: [400, 33073, 12.09],
+            backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0']
+        }]
+    }
+});
+
+new Chart(document.getElementById('fbTypeChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Fotos'],
+        datasets: [{
+            label: 'Total de Clics por Tipo',
+            data: [436],
+            backgroundColor: 'rgba(153, 102, 255, 0.6)'
+        }]
+    }
+});
+
+new Chart(document.getElementById('igCPCChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Costo por clic'],
+        datasets: [{
+            label: 'Instagram CPC',
+            data: [6.78],
+            backgroundColor: 'rgba(255, 159, 64, 0.6)'
+        }]
+    }
+});
+
+new Chart(document.getElementById('webSourceChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Bing', 'Directa', 'Facebook', 'Google', 'Instagram', 'Linktree', 'TikTok'],
+        datasets: [{
+            label: 'Visitas por fuente',
+            data: [7, 347, 80, 66, 108, 14, 3],
+            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+        }]
+    }
+});
+
+new Chart(document.getElementById('webDurationChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Directa', 'Facebook', 'Google', 'Instagram', 'Linktree', 'TikTok'],
+        datasets: [{
+            label: 'Duración promedio (seg)',
+            data: [24.71, 26.47, 21.67, 21.27, 35.0, 50.0],
+            backgroundColor: 'rgba(255, 206, 86, 0.6)'
+        }]
+    }
+});
+</script>
+</body>
+</html>
